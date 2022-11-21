@@ -1,6 +1,7 @@
 #include <iostream>
 #pragma once
 
+
 template <typename Type>
 class SingleLinkedList {
     // Узел списка
@@ -172,7 +173,7 @@ public:
           size_(0)
     {
         assert(size_ == 0 && head_.next_node == nullptr);
-        assign(values);
+        Assign(values);
     }
 
     SingleLinkedList(const SingleLinkedList& other)
@@ -180,7 +181,7 @@ public:
           size_(0)
     {
         assert(size_ == 0 && head_.next_node == nullptr);
-        assign(other.begin(), other.end());
+        Assign(other.begin(), other.end());
     }
 
     ~SingleLinkedList()
@@ -225,11 +226,6 @@ public:
 
     void PopFront() noexcept
     {
-        if (IsEmpty() && head_.next_node == nullptr)
-        {
-            return;
-        }
-
         assert(!IsEmpty() || head_.next_node != nullptr);
 
         Node *ptr_to_delete = head_.next_node;
@@ -345,13 +341,13 @@ public:
 
 private:
 
-    void assign(const std::initializer_list<Type> &values) noexcept
+    void Assign(const std::initializer_list<Type> &values) noexcept
     {
-        assign(values.begin(), values.end());
+        Assign(values.begin(), values.end());
     }
 
     template <typename InputIterator>
-    void assign(InputIterator from, InputIterator to) noexcept
+    void Assign(InputIterator from, InputIterator to) noexcept
     {
         SingleLinkedList tmp = {};
         Node *last_node_tmp = &tmp.head_;
@@ -383,9 +379,12 @@ template <typename Type>
 bool operator==(const SingleLinkedList<Type>& lhs,
                 const SingleLinkedList<Type>& rhs)
 {
-    return (&lhs == &rhs) ||
-            (lhs.GetSize() == rhs.GetSize()
-             && std::equal(lhs.begin(), lhs.end(), rhs.begin()));
+    if (&lhs == &rhs)
+    {
+        return true;
+    }
+    
+    return  std::equal(lhs.begin(), lhs.end(), rhs.begin());
 }
 
 template <typename Type>
@@ -423,3 +422,4 @@ bool operator>=(const SingleLinkedList<Type>& lhs,
 {
     return !operator<(lhs, rhs);
 }
+
