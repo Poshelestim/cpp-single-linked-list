@@ -347,17 +347,7 @@ private:
 
     void assign(const std::initializer_list<Type> &values) noexcept
     {
-        SingleLinkedList tmp = {};
-        Node *last_node_tmp = &tmp.head_;
-        for (const auto *it = values.begin(); it != values.end(); ++it)
-        {
-            Node *copy_node = new Node(*it, nullptr);
-            last_node_tmp->next_node = copy_node;
-            last_node_tmp = copy_node;
-            ++tmp.size_;
-        }
-
-        swap(tmp);
+        assign(values.begin(), values.end());
     }
 
     template <typename InputIterator>
